@@ -139,7 +139,7 @@ paths:
               - ip_address
               - id_type
               - id_number
-                /customer/generate_kyc_link/{customer_id}:
+  /customer/generate_kyc_link/{customer_id}:
     get:
       summary: Generate KYC link
       tags:
