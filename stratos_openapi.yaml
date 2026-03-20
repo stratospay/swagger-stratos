@@ -61,7 +61,327 @@ tags:
 - name: Merchant (Main Account) - Local Transfer
 - name: Merchant (Main Account) - General
 paths:
-  /customer/director/all/{customer_id}:
+  /customer/create:
+    post:
+      summary: Create customer - personal
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account_type:
+                  type: string
+                gender:
+                  type: string
+                first_name:
+                  type: string
+                middle_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+                phone_iso2:
+                  type: string
+                country:
+                  type: string
+                state:
+                  type: string
+                city:
+                  type: string
+                street:
+                  type: string
+                postal_code:
+                  type: string
+                birthday:
+                  type: string
+                source_of_fund_id:
+                  type: string
+                ip_address:
+                  type: string
+                id_type:
+                  type: string
+                id_number:
+                  type: string
+              required:
+              - account_type
+              - gender
+              - first_name
+              - middle_name
+              - last_name
+              - email
+              - phone
+              - phone_iso2
+              - country
+              - state
+              - city
+              - street
+              - postal_code
+              - birthday
+              - source_of_fund_id
+              - ip_address
+              - id_type
+              - id_number
+                /customer/generate_kyc_link/{customer_id}:
+    get:
+      summary: Generate KYC link
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/submit_kyc/{customer_id}:
+    post:
+      summary: Submit KYC
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/upload_document/{customer_id}/{document_type}:
+    post:
+      summary: Add Kyc Document
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: document_type
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+  /customer/users:
+    get:
+      summary: Get all customers
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/users/{customer_id}:
+    get:
+      summary: Get a customer
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/update:
+    post:
+      summary: Update customer
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                gender:
+                  type: string
+                first_name:
+                  type: string
+                middle_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+                phone_iso2:
+                  type: string
+                country:
+                  type: string
+                state:
+                  type: string
+                city:
+                  type: string
+                street:
+                  type: string
+                postal_code:
+                  type: string
+                birthday:
+                  type: string
+                source_of_fund_id:
+                  type: string
+                ip_address:
+                  type: string
+                id_type:
+                  type: string
+                id_number:
+                  type: string
+              required:
+              - gender
+              - first_name
+              - middle_name
+              - last_name
+              - email
+              - phone
+              - phone_iso2
+              - country
+              - state
+              - city
+              - street
+              - postal_code
+              - birthday
+              - source_of_fund_id
+              - ip_address
+              - id_type
+              - id_number
+  /business_registration_type:
+    get:
+      summary: Business registration types
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /mcc:
+    get:
+      summary: Business MCC
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /source_of_funds:
+    get:
+      summary: Source of funds
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+            /customer/director/all/{customer_id}:
     get:
       summary: Get all directors
       tags:
@@ -277,326 +597,6 @@ paths:
         required: true
         schema:
           type: string
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '422':
-          description: Unprocessable Entity
-  /customer/create:
-    post:
-      summary: Create customer - personal
-      tags:
-      - Onboarded Customers - Onboarding
-      security:
-      - bearerAuth: []
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '422':
-          description: Unprocessable Entity
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                account_type:
-                  type: string
-                gender:
-                  type: string
-                first_name:
-                  type: string
-                middle_name:
-                  type: string
-                last_name:
-                  type: string
-                email:
-                  type: string
-                phone:
-                  type: string
-                phone_iso2:
-                  type: string
-                country:
-                  type: string
-                state:
-                  type: string
-                city:
-                  type: string
-                street:
-                  type: string
-                postal_code:
-                  type: string
-                birthday:
-                  type: string
-                source_of_fund_id:
-                  type: string
-                ip_address:
-                  type: string
-                id_type:
-                  type: string
-                id_number:
-                  type: string
-              required:
-              - account_type
-              - gender
-              - first_name
-              - middle_name
-              - last_name
-              - email
-              - phone
-              - phone_iso2
-              - country
-              - state
-              - city
-              - street
-              - postal_code
-              - birthday
-              - source_of_fund_id
-              - ip_address
-              - id_type
-              - id_number
-  /customer/submit_kyc/{customer_id}:
-    post:
-      summary: Submit KYC
-      tags:
-      - Onboarded Customers - Onboarding
-      security:
-      - bearerAuth: []
-      parameters:
-      - name: customer_id
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '422':
-          description: Unprocessable Entity
-  /customer/upload_document/{customer_id}/{document_type}:
-    post:
-      summary: Add Kyc Document
-      tags:
-      - Onboarded Customers - Onboarding
-      security:
-      - bearerAuth: []
-      parameters:
-      - name: customer_id
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: document_type
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '422':
-          description: Unprocessable Entity
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                file:
-                  type: string
-                  format: binary
-  /customer/users:
-    get:
-      summary: Get all customers
-      tags:
-      - Onboarded Customers - Onboarding
-      security:
-      - bearerAuth: []
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '422':
-          description: Unprocessable Entity
-  /customer/users/{customer_id}:
-    get:
-      summary: Get a customer
-      tags:
-      - Onboarded Customers - Onboarding
-      security:
-      - bearerAuth: []
-      parameters:
-      - name: customer_id
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '422':
-          description: Unprocessable Entity
-  /customer/generate_kyc_link/{customer_id}:
-    get:
-      summary: Generate KYC link
-      tags:
-      - Onboarded Customers - Onboarding
-      security:
-      - bearerAuth: []
-      parameters:
-      - name: customer_id
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '422':
-          description: Unprocessable Entity
-  /customer/update:
-    post:
-      summary: Update customer
-      tags:
-      - Onboarded Customers - Onboarding
-      security:
-      - bearerAuth: []
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '422':
-          description: Unprocessable Entity
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                gender:
-                  type: string
-                first_name:
-                  type: string
-                middle_name:
-                  type: string
-                last_name:
-                  type: string
-                email:
-                  type: string
-                phone:
-                  type: string
-                phone_iso2:
-                  type: string
-                country:
-                  type: string
-                state:
-                  type: string
-                city:
-                  type: string
-                street:
-                  type: string
-                postal_code:
-                  type: string
-                birthday:
-                  type: string
-                source_of_fund_id:
-                  type: string
-                ip_address:
-                  type: string
-                id_type:
-                  type: string
-                id_number:
-                  type: string
-              required:
-              - gender
-              - first_name
-              - middle_name
-              - last_name
-              - email
-              - phone
-              - phone_iso2
-              - country
-              - state
-              - city
-              - street
-              - postal_code
-              - birthday
-              - source_of_fund_id
-              - ip_address
-              - id_type
-              - id_number
-  /business_registration_type:
-    get:
-      summary: Business registration types
-      tags:
-      - Onboarded Customers - Onboarding
-      security:
-      - bearerAuth: []
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '422':
-          description: Unprocessable Entity
-  /mcc:
-    get:
-      summary: Business MCC
-      tags:
-      - Onboarded Customers - Onboarding
-      security:
-      - bearerAuth: []
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '422':
-          description: Unprocessable Entity
-  /source_of_funds:
-    get:
-      summary: Source of funds
-      tags:
-      - Onboarded Customers - Onboarding
-      security:
-      - bearerAuth: []
       responses:
         '200':
           description: OK
@@ -1687,7 +1687,7 @@ paths:
           description: Unauthorized
         '422':
           description: Unprocessable Entity
-  /barcode/87864098-47a6-4dfc-81f0-af8028999d5b:
+  /barcode/{session_id}:
     post:
       summary: Cash Payment
       tags:
