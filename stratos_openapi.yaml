@@ -1,0 +1,2847 @@
+openapi: 3.0.3
+info:
+  title: Stratos API
+  version: 1.0.0
+  description: '# Introduction
+
+
+    Welcome
+
+
+    Stratos Payment offers a unified API to integrate financial service to your application.
+
+
+    ## Can we assist you?
+
+
+    Thank you for taking the time to use Stratos Payment APIs.
+
+
+    Please contact us at [support@stratospayments.com](https://mailto:support@stratospayments.com)
+    if you have any queries, feature suggestions, or discover any problems.
+
+
+    StartFragment
+
+
+    # Environment
+
+
+    To make testing and developing with Stratos Payment quick and easy, we make use
+    of the same API endpoint for sandbox and production, the only difference is the
+    keys used when calling the APIs.
+
+
+    | Environment | Purpose | Base URL |
+
+    | --- | --- | --- |
+
+    | Sandbox | The sandbox environment is dedicated to test and development phases.
+    | [https://stratospay.com/api/v1](https://stratospay.com/api) |
+
+    | Production | The production environment is dedicated for live transactions.
+    | [https://stratospay.com/api/v1](https://stratospay.com/api) |'
+servers:
+- url: https://stratospay.com/api/v1
+  description: Production / Sandbox (use appropriate API key)
+tags:
+- name: Onboarded Customers - Onboarding
+- name: Onboarded Customers - Virtual Cards
+- name: Onboarded Customers - Crypto Wallets
+- name: Onboarded Customers - Fiat Wallets
+- name: Onboarded Customers - Transactions
+- name: Onboarded Customers - Remittance Recipients
+- name: Onboarded Customers - MCP Server
+- name: Onboarded Customers - Multi Factor Security
+- name: Onboarded Customers - Swap & Payout
+- name: Merchant (Main Account) - Payment Collection
+- name: Merchant (Main Account) - Transactions
+- name: Merchant (Main Account) - Remittance
+- name: Merchant (Main Account) - Blockchain Ledger
+- name: Merchant (Main Account) - Local Transfer
+- name: Merchant (Main Account) - General
+paths:
+  /customer/director/all/{customer_id}:
+    get:
+      summary: Get all directors
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/director/create/{customer_id}:
+    post:
+      summary: Create a director
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                middle_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+                phone_iso2:
+                  type: string
+                country:
+                  type: string
+                state:
+                  type: string
+                city:
+                  type: string
+                street:
+                  type: string
+                postal_code:
+                  type: string
+                ownership:
+                  type: integer
+                position:
+                  type: string
+                birthday:
+                  type: string
+              required:
+              - first_name
+              - middle_name
+              - last_name
+              - email
+              - phone
+              - phone_iso2
+              - country
+              - state
+              - city
+              - street
+              - postal_code
+              - ownership
+              - position
+              - birthday
+  /customer/director/all/{customer_id}/{director_id}:
+    get:
+      summary: Director
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: director_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/director/update/{customer_id}/{director_id}:
+    post:
+      summary: Update director
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: director_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                middle_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+                phone_iso2:
+                  type: string
+                country:
+                  type: string
+                state:
+                  type: string
+                city:
+                  type: string
+                street:
+                  type: string
+                postal_code:
+                  type: string
+                ownership:
+                  type: integer
+                position:
+                  type: string
+                birthday:
+                  type: string
+              required:
+              - first_name
+              - middle_name
+              - last_name
+              - email
+              - phone
+              - phone_iso2
+              - country
+              - state
+              - city
+              - street
+              - postal_code
+              - ownership
+              - position
+              - birthday
+  /customer/director/delete/{customer_id}/{director_id}:
+    delete:
+      summary: Delete director
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: director_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/create:
+    post:
+      summary: Create customer - personal
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account_type:
+                  type: string
+                gender:
+                  type: string
+                first_name:
+                  type: string
+                middle_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+                phone_iso2:
+                  type: string
+                country:
+                  type: string
+                state:
+                  type: string
+                city:
+                  type: string
+                street:
+                  type: string
+                postal_code:
+                  type: string
+                birthday:
+                  type: string
+                source_of_fund_id:
+                  type: string
+                ip_address:
+                  type: string
+                id_type:
+                  type: string
+                id_number:
+                  type: string
+              required:
+              - account_type
+              - gender
+              - first_name
+              - middle_name
+              - last_name
+              - email
+              - phone
+              - phone_iso2
+              - country
+              - state
+              - city
+              - street
+              - postal_code
+              - birthday
+              - source_of_fund_id
+              - ip_address
+              - id_type
+              - id_number
+  /customer/submit_kyc/{customer_id}:
+    post:
+      summary: Submit KYC
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/upload_document/{customer_id}/{document_type}:
+    post:
+      summary: Add Kyc Document
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: document_type
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+  /customer/users:
+    get:
+      summary: Get all customers
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/users/{customer_id}:
+    get:
+      summary: Get a customer
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/generate_kyc_link/{customer_id}:
+    get:
+      summary: Generate KYC link
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/update:
+    post:
+      summary: Update customer
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                gender:
+                  type: string
+                first_name:
+                  type: string
+                middle_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+                phone_iso2:
+                  type: string
+                country:
+                  type: string
+                state:
+                  type: string
+                city:
+                  type: string
+                street:
+                  type: string
+                postal_code:
+                  type: string
+                birthday:
+                  type: string
+                source_of_fund_id:
+                  type: string
+                ip_address:
+                  type: string
+                id_type:
+                  type: string
+                id_number:
+                  type: string
+              required:
+              - gender
+              - first_name
+              - middle_name
+              - last_name
+              - email
+              - phone
+              - phone_iso2
+              - country
+              - state
+              - city
+              - street
+              - postal_code
+              - birthday
+              - source_of_fund_id
+              - ip_address
+              - id_type
+              - id_number
+  /business_registration_type:
+    get:
+      summary: Business registration types
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /mcc:
+    get:
+      summary: Business MCC
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /source_of_funds:
+    get:
+      summary: Source of funds
+      tags:
+      - Onboarded Customers - Onboarding
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /card/create-cardholder/{customer_id}:
+    post:
+      summary: Create Cardholder
+      tags:
+      - Onboarded Customers - Virtual Cards
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /card/cardholder/{customer_id}:
+    get:
+      summary: Get Cardholder
+      tags:
+      - Onboarded Customers - Virtual Cards
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /card/create-card/{customer_id}:
+    post:
+      summary: Create Virtual card
+      tags:
+      - Onboarded Customers - Virtual Cards
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currency:
+                  type: string
+              required:
+              - currency
+  /card/cards/{customer_id}/{card_id}:
+    get:
+      summary: Get Single Card
+      tags:
+      - Onboarded Customers - Virtual Cards
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: card_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /card/cards/{customer_id}:
+    get:
+      summary: All Cards
+      tags:
+      - Onboarded Customers - Virtual Cards
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /card/fund/{customer_id}/{card_id}:
+    post:
+      summary: Fund Card
+      tags:
+      - Onboarded Customers - Virtual Cards
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: card_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: integer
+              required:
+              - amount
+  /card/withdraw/{customer_id}/{card_id}:
+    post:
+      summary: Activate card
+      tags:
+      - Onboarded Customers - Virtual Cards
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: card_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: integer
+              required:
+              - amount
+  /card/deactivate/{customer_id}/{card_id}:
+    post:
+      summary: Deactivate card
+      tags:
+      - Onboarded Customers - Virtual Cards
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: card_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: integer
+              required:
+              - amount
+  /card/transactions/{customer_id}/{card_id}:
+    get:
+      summary: Card transactions
+      tags:
+      - Onboarded Customers - Virtual Cards
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: card_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /decrypt:
+    post:
+      summary: Decrypt Card
+      tags:
+      - Onboarded Customers - Virtual Cards
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: string
+              required:
+              - data
+  /customer/cryptowallets/{customer_id}:
+    get:
+      summary: Fetch all wallets
+      tags:
+      - Onboarded Customers - Crypto Wallets
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/cryptowallets/new/{wallet_id}:
+    get:
+      summary: Generate new wallet address
+      tags:
+      - Onboarded Customers - Crypto Wallets
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: wallet_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /virtual/accounts/{customer_id}/create:
+    post:
+      summary: Create virtual account
+      tags:
+      - Onboarded Customers - Fiat Wallets
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currency:
+                  type: string
+                bvn:
+                  type: string
+              required:
+              - currency
+              - bvn
+  /virtual/accounts/{customer_id}/bank-details:
+    get:
+      summary: Fetch all accounts
+      tags:
+      - Onboarded Customers - Fiat Wallets
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /virtual/accounts/{customer_id}/bank-details/{virtual_account_id}:
+    get:
+      summary: Fetch single account
+      tags:
+      - Onboarded Customers - Fiat Wallets
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: virtual_account_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/wallets/{customer_id}:
+    get:
+      summary: All wallets
+      tags:
+      - Onboarded Customers - Fiat Wallets
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/transactions/{customer_id}:
+    get:
+      summary: All  transactions
+      tags:
+      - Onboarded Customers - Transactions
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/transactions/{customer_id}/{trx_id}:
+    get:
+      summary: Single transaction
+      tags:
+      - Onboarded Customers - Transactions
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: trx_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/recipient/transactions/{customer_id}/{recipient_id}:
+    get:
+      summary: Payout recipient transactions
+      tags:
+      - Onboarded Customers - Transactions
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: recipient_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/wallet/transactions/{customer_id}/{customer_wallet_id}:
+    get:
+      summary: Fiat Wallet Transactions
+      tags:
+      - Onboarded Customers - Transactions
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: customer_wallet_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/crypto/wallet/transactions/{customer_id}/{customer_crypto_wallet_id}:
+    get:
+      summary: Crypto Wallet Transactions
+      tags:
+      - Onboarded Customers - Transactions
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: customer_crypto_wallet_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/recipient/create/{customer_id}:
+    post:
+      summary: Add recipient
+      tags:
+      - Onboarded Customers - Remittance Recipients
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                international_remittance_id:
+                  type: string
+                first_name:
+                  type: string
+                middle_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+                phone_iso2:
+                  type: string
+                delivery_method:
+                  type: string
+                bank_name:
+                  type: string
+                entity_type:
+                  type: string
+                routing_type:
+                  type: string
+                routing_code:
+                  type: string
+                acct_type_id:
+                  type: string
+                acct_no:
+                  type: string
+                acct_name:
+                  type: string
+                state:
+                  type: string
+                city:
+                  type: string
+                address:
+                  type: string
+                postal_code:
+                  type: string
+              required:
+              - international_remittance_id
+              - first_name
+              - middle_name
+              - last_name
+              - email
+              - phone
+              - phone_iso2
+              - delivery_method
+              - bank_name
+              - entity_type
+              - routing_type
+              - routing_code
+              - acct_type_id
+              - acct_no
+              - acct_name
+              - state
+              - city
+              - address
+              - postal_code
+  /customer/recipient/{customer_id}/{recipient_id}:
+    get:
+      summary: Get a recipient
+      tags:
+      - Onboarded Customers - Remittance Recipients
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: recipient_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/recipient/{customer_id}:
+    get:
+      summary: Get all recipients
+      tags:
+      - Onboarded Customers - Remittance Recipients
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/recipient/update/{customer_id}/{recipient_id}:
+    post:
+      summary: Update recipient
+      tags:
+      - Onboarded Customers - Remittance Recipients
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: recipient_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                international_remittance_id:
+                  type: string
+                first_name:
+                  type: string
+                middle_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+                phone_iso2:
+                  type: string
+                delivery_method:
+                  type: string
+                bank_name:
+                  type: string
+                entity_type:
+                  type: string
+                routing_type:
+                  type: string
+                routing_code:
+                  type: string
+                acct_type_id:
+                  type: string
+                acct_no:
+                  type: string
+                acct_name:
+                  type: string
+                state:
+                  type: string
+                city:
+                  type: string
+                address:
+                  type: string
+                postal_code:
+                  type: string
+              required:
+              - international_remittance_id
+              - first_name
+              - middle_name
+              - last_name
+              - email
+              - phone
+              - phone_iso2
+              - delivery_method
+              - bank_name
+              - entity_type
+              - routing_type
+              - routing_code
+              - acct_type_id
+              - acct_no
+              - acct_name
+              - state
+              - city
+              - address
+              - postal_code
+  /customer/recipient/delete/{customer_id}/{recipient_id}:
+    delete:
+      summary: Delete recipient
+      tags:
+      - Onboarded Customers - Remittance Recipients
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: recipient_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/fetch-mcp-key/{customer_id}:
+    get:
+      summary: Fetch Customer MCP Keys
+      tags:
+      - Onboarded Customers - MCP Server
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/rotate-mcp-key/{customer_id}:
+    get:
+      summary: Rotate Customer MCP Keys
+      tags:
+      - Onboarded Customers - MCP Server
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/multi-factor-security/{customer_id}:
+    get:
+      summary: Link to Auth App
+      tags:
+      - Onboarded Customers - Multi Factor Security
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/activate-multi-factor-security/{customer_id}:
+    get:
+      summary: Activate
+      tags:
+      - Onboarded Customers - Multi Factor Security
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/disable-multi-factor-security/{customer_id}:
+    get:
+      summary: Disable
+      tags:
+      - Onboarded Customers - Multi Factor Security
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /customer/swap/{customer_id}:
+    post:
+      summary: Swap funds (On Customer Account)
+      tags:
+      - Onboarded Customers - Swap & Payout
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                from_wallet:
+                  type: string
+                to_wallet:
+                  type: string
+                amount:
+                  type: integer
+                external_id:
+                  type: string
+              required:
+              - from_wallet
+              - to_wallet
+              - amount
+              - external_id
+  /customer/payout/{customer_id}:
+    post:
+      summary: Create payout (On Customer Account)
+      tags:
+      - Onboarded Customers - Swap & Payout
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transfer_purpose_id:
+                  type: string
+                external_id:
+                  type: string
+                recipient_id:
+                  type: string
+                delivery_window_id:
+                  type: string
+                amount:
+                  type: integer
+              required:
+              - transfer_purpose_id
+              - external_id
+              - recipient_id
+              - delivery_window_id
+              - amount
+  /payment:
+    post:
+      summary: initiate payment
+      tags:
+      - Merchant (Main Account) - Payment Collection
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /charge-card:
+    post:
+      summary: Direct Card Charge
+      tags:
+      - Merchant (Main Account) - Payment Collection
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /verify-payment/{payment_external_reference}:
+    get:
+      summary: Verify payment
+      tags:
+      - Merchant (Main Account) - Payment Collection
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: payment_external_reference
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /barcode/87864098-47a6-4dfc-81f0-af8028999d5b:
+    post:
+      summary: Cash Payment
+      tags:
+      - Merchant (Main Account) - Payment Collection
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                latitude:
+                  type: string
+                longitude:
+                  type: string
+              required:
+              - latitude
+              - longitude
+  /transactions:
+    get:
+      summary: All  transactions
+      tags:
+      - Merchant (Main Account) - Transactions
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /transactions/{trx_id}:
+    get:
+      summary: Single transaction
+      tags:
+      - Merchant (Main Account) - Transactions
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: trx_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /recipient/transactions/{recipient_id}:
+    get:
+      summary: Payout recipient transactions
+      tags:
+      - Merchant (Main Account) - Transactions
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: recipient_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /wallet/transactions/{wallet_id}:
+    get:
+      summary: Fiat Wallet Transactions
+      tags:
+      - Merchant (Main Account) - Transactions
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: wallet_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /cryptowallet/transactions/{crypto_wallet_id}:
+    get:
+      summary: Crypto Wallet Transactions
+      tags:
+      - Merchant (Main Account) - Transactions
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: crypto_wallet_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /recipient/create:
+    post:
+      summary: Add recipient
+      tags:
+      - Merchant (Main Account) - Remittance
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                international_remittance_id:
+                  type: string
+                first_name:
+                  type: string
+                middle_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+                phone_iso2:
+                  type: string
+                delivery_method:
+                  type: string
+                bank_name:
+                  type: string
+                entity_type:
+                  type: string
+                routing_type:
+                  type: string
+                routing_code:
+                  type: string
+                acct_type_id:
+                  type: string
+                acct_no:
+                  type: string
+                acct_name:
+                  type: string
+                state:
+                  type: string
+                city:
+                  type: string
+                address:
+                  type: string
+                postal_code:
+                  type: string
+              required:
+              - international_remittance_id
+              - first_name
+              - middle_name
+              - last_name
+              - email
+              - phone
+              - phone_iso2
+              - delivery_method
+              - bank_name
+              - entity_type
+              - routing_type
+              - routing_code
+              - acct_type_id
+              - acct_no
+              - acct_name
+              - state
+              - city
+              - address
+              - postal_code
+  /recipient/{recipient_id}:
+    get:
+      summary: Get a recipient
+      tags:
+      - Merchant (Main Account) - Remittance
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: recipient_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /recipient:
+    get:
+      summary: Get all recipients
+      tags:
+      - Merchant (Main Account) - Remittance
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /recipient/update/{recipient_id}:
+    post:
+      summary: Update recipient
+      tags:
+      - Merchant (Main Account) - Remittance
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: recipient_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                international_remittance_id:
+                  type: string
+                first_name:
+                  type: string
+                middle_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+                phone_iso2:
+                  type: string
+                delivery_method:
+                  type: string
+                bank_name:
+                  type: string
+                entity_type:
+                  type: string
+                routing_type:
+                  type: string
+                routing_code:
+                  type: string
+                acct_type_id:
+                  type: string
+                acct_no:
+                  type: string
+                acct_name:
+                  type: string
+                state:
+                  type: string
+                city:
+                  type: string
+                address:
+                  type: string
+                postal_code:
+                  type: string
+              required:
+              - international_remittance_id
+              - first_name
+              - middle_name
+              - last_name
+              - email
+              - phone
+              - phone_iso2
+              - delivery_method
+              - bank_name
+              - entity_type
+              - routing_type
+              - routing_code
+              - acct_type_id
+              - acct_no
+              - acct_name
+              - state
+              - city
+              - address
+              - postal_code
+  /recipient/delete/{recipient_id}:
+    delete:
+      summary: Delete recipient
+      tags:
+      - Merchant (Main Account) - Remittance
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: recipient_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /simulate/success/{trx_id}:
+    get:
+      summary: Approve payout
+      tags:
+      - Merchant (Main Account) - Remittance
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: trx_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /simulate/decline/{trx_id}:
+    get:
+      summary: Decline payout
+      tags:
+      - Merchant (Main Account) - Remittance
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: trx_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /verify-bank:
+    post:
+      summary: Verify bank
+      tags:
+      - Merchant (Main Account) - Remittance
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                routing_type:
+                  type: string
+                routing_code:
+                  type: string
+                iso2:
+                  type: string
+              required:
+              - routing_type
+              - routing_code
+              - iso2
+  /transfer_purpose:
+    get:
+      summary: Transfer purpose
+      tags:
+      - Merchant (Main Account) - Remittance
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /banks/us:
+    get:
+      summary: Banks
+      tags:
+      - Merchant (Main Account) - Remittance
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /networks/{currency_id}:
+    get:
+      summary: Mobile money networks
+      tags:
+      - Merchant (Main Account) - Remittance
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: currency_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /crypto/{currency_id}:
+    get:
+      summary: Cryptocurrency
+      tags:
+      - Merchant (Main Account) - Remittance
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: currency_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /ledger/create_entity:
+    post:
+      summary: Create entity
+      tags:
+      - Merchant (Main Account) - Blockchain Ledger
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                entity_name:
+                  type: string
+                external_reference:
+                  type: string
+              required:
+              - entity_name
+              - external_reference
+  /ledger/entity/{entity_id}:
+    get:
+      summary: Fetch an entity
+      tags:
+      - Merchant (Main Account) - Blockchain Ledger
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: entity_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /ledger/entity:
+    get:
+      summary: Fetch all entities
+      tags:
+      - Merchant (Main Account) - Blockchain Ledger
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /ledger/credit_trx:
+    post:
+      summary: Create credit transaction
+      tags:
+      - Merchant (Main Account) - Blockchain Ledger
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                entity_id:
+                  type: string
+                currency:
+                  type: string
+                amount:
+                  type: string
+                external_reference:
+                  type: string
+              required:
+              - entity_id
+              - currency
+              - amount
+              - external_reference
+  /ledger/debit_trx:
+    post:
+      summary: Create debit transaction
+      tags:
+      - Merchant (Main Account) - Blockchain Ledger
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                entity_id:
+                  type: string
+                currency:
+                  type: string
+                amount:
+                  type: string
+                external_reference:
+                  type: string
+              required:
+              - entity_id
+              - currency
+              - amount
+              - external_reference
+  /ledger/transfer_trx:
+    post:
+      summary: Transfer transaction
+      tags:
+      - Merchant (Main Account) - Blockchain Ledger
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                entity_id:
+                  type: string
+                recipient_entity_id:
+                  type: string
+                amount:
+                  type: string
+                currency:
+                  type: string
+                external_reference:
+                  type: string
+              required:
+              - entity_id
+              - recipient_entity_id
+              - amount
+              - currency
+              - external_reference
+  /ledger/transactions/{entity_id}/{ledger_transaction_id}:
+    get:
+      summary: Entity single transaction
+      tags:
+      - Merchant (Main Account) - Blockchain Ledger
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: entity_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: ledger_transaction_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /ledger/transactions/{entity_id}:
+    get:
+      summary: Entity transactions
+      tags:
+      - Merchant (Main Account) - Blockchain Ledger
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: entity_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /ledger/fetch_balances:
+    post:
+      summary: Fetch balances
+      tags:
+      - Merchant (Main Account) - Blockchain Ledger
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      entity_id:
+                        type: string
+                      currency:
+                        type: string
+                    required:
+                    - entity_id
+                    - currency
+              required:
+              - data
+  /ledger/validate_bulk_trx:
+    post:
+      summary: Validate Bulk Request
+      tags:
+      - Merchant (Main Account) - Blockchain Ledger
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      entity_id:
+                        type: string
+                      external_reference:
+                        type: string
+                      currency:
+                        type: string
+                      amount:
+                        type: integer
+                      type:
+                        type: string
+                      allowNegativeBalance:
+                        type: boolean
+                      allowPositiveBalance:
+                        type: boolean
+                    required:
+                    - entity_id
+                    - external_reference
+                    - currency
+                    - amount
+                    - type
+                    - allowNegativeBalance
+                    - allowPositiveBalance
+              required:
+              - data
+  /ledger/bulk_trx:
+    post:
+      summary: Bulk Transaction
+      tags:
+      - Merchant (Main Account) - Blockchain Ledger
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      entity_id:
+                        type: string
+                      external_reference:
+                        type: string
+                      currency:
+                        type: string
+                      amount:
+                        type: integer
+                      type:
+                        type: string
+                      allowPositiveBalance:
+                        type: boolean
+                    required:
+                    - entity_id
+                    - external_reference
+                    - currency
+                    - amount
+                    - type
+                    - allowPositiveBalance
+              required:
+              - data
+  /transfer_to_customer:
+    post:
+      summary: Transfer to customer
+      tags:
+      - Merchant (Main Account) - Local Transfer
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                from_wallet:
+                  type: string
+                amount:
+                  type: string
+                account_id:
+                  type: string
+                external_id:
+                  type: string
+              required:
+              - from_wallet
+              - amount
+              - account_id
+              - external_id
+  /transfer_from_customer/0031461:
+    post:
+      summary: Transfer from customer
+      tags:
+      - Merchant (Main Account) - Local Transfer
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                from_wallet:
+                  type: string
+                amount:
+                  type: string
+                external_id:
+                  type: string
+              required:
+              - from_wallet
+              - amount
+              - external_id
+  /countries:
+    get:
+      summary: All Countries covered by Stratos
+      tags:
+      - Merchant (Main Account) - General
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /currencies/{iso2}/USD:
+    get:
+      summary: Fiat Currencies by iso2
+      tags:
+      - Merchant (Main Account) - General
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: iso2
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /cryptocurrencies/{iso2}:
+    get:
+      summary: Crypto Currencies by iso2
+      tags:
+      - Merchant (Main Account) - General
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: iso2
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /account_fiat_currencies:
+    get:
+      summary: Main Account Fiat Currencies Configuration
+      tags:
+      - Merchant (Main Account) - General
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /account_crypto_currencies:
+    get:
+      summary: Main Account Crypto Currencies Configuration
+      tags:
+      - Merchant (Main Account) - General
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /wallet:
+    get:
+      summary: Main Account Fiat wallets
+      tags:
+      - Merchant (Main Account) - General
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /cryptowallet:
+    get:
+      summary: Main Account Crypto wallets
+      tags:
+      - Merchant (Main Account) - General
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /swap:
+    post:
+      summary: Swap funds (On Main Account)
+      tags:
+      - Merchant (Main Account) - General
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                from_wallet:
+                  type: string
+                to_wallet:
+                  type: string
+                amount:
+                  type: integer
+                external_id:
+                  type: string
+              required:
+              - from_wallet
+              - to_wallet
+              - amount
+              - external_id
+  /payout:
+    post:
+      summary: Create payout (On Main Account)
+      tags:
+      - Merchant (Main Account) - General
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transfer_purpose_id:
+                  type: string
+                external_id:
+                  type: string
+                account_id:
+                  type: string
+                recipient_id:
+                  type: string
+                delivery_window_id:
+                  type: string
+                amount:
+                  type: integer
+              required:
+              - transfer_purpose_id
+              - external_id
+              - account_id
+              - recipient_id
+              - delivery_window_id
+              - amount
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
