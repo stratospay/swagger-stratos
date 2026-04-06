@@ -64,47 +64,45 @@ paths:
   /customer/director/all/{customer_id}:
     get:
       summary: Get all directors
+      description: >
+        Returns a comprehensive list of all directors associated with a specific onboarded customer.
       tags:
-      - Onboarded Customers - Onboarding
+        - Onboarded Customers - Onboarding
       security:
-      - bearerAuth: []
+        - bearerAuth: [ ]
       parameters:
-      - name: customer_id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: customer_id
+          in: path
+          required: true
+          description: The unique identifier of the customer whose directors you want to retrieve.
+          schema:
+            type: string
       responses:
         '200':
-          description: OK
+          description: OK - Returns an array of director objects.
         '400':
-          description: Bad Request
+          description: Bad Request - Check the customer_id format.
         '401':
-          description: Unauthorized
+          description: Unauthorized - Bearer token missing or invalid.
         '422':
-          description: Unprocessable Entity
+          description: Unprocessable Entity - Valid ID but record not found.
   /customer/director/create/{customer_id}:
     post:
       summary: Create a director
+      description: >
+        Adds a new director to an existing customer profile. 
+        Pass your `{api_key}` as a bearer token in the request header to authorize this call.
       tags:
-      - Onboarded Customers - Onboarding
+        - Onboarded Customers - Onboarding
       security:
-      - bearerAuth: []
+        - bearerAuth: [ ]
       parameters:
-      - name: customer_id
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '422':
-          description: Unprocessable Entity
+        - name: customer_id
+          in: path
+          required: true
+          description: The unique identifier of the customer (onboarded entity).
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -114,68 +112,164 @@ paths:
               properties:
                 first_name:
                   type: string
+                  description: Director's legal first name
+                  example: John
+
                 middle_name:
                   type: string
+                  description: Director's legal middle name
+                  example: Michael
+
                 last_name:
                   type: string
+                  description: Director's legal last name
+                  example: Derrick
+
                 email:
                   type: string
+                  format: email
+                  description: Director's email address
+                  example: derrick@remote.com
+
                 phone:
                   type: string
+                  description: Director's phone number, including country dialing code if applicable
+                  example: +234901234567899
+
                 phone_iso2:
                   type: string
+                  description: ISO 3166-1 alpha-2 country code for the phone number
+                  example: NG
+
                 country:
                   type: string
+                  description: ISO 3166-1 alpha-2 country code of residence
+                  example: US
+
                 state:
                   type: string
+                  description: State, province, or subdivision code/name for the director's address
+                  example: DE
+
                 city:
                   type: string
+                  description: City of residence
+                  example: Wilmington
+
                 street:
                   type: string
+                  description: Street address of the director
+                  example: 24 Maple Avenue
+
                 postal_code:
                   type: string
+                  description: Postal or ZIP code for the address
+                  example: 90000
+
                 ownership:
                   type: integer
+                  description: Percentage of shares owned by the director
+                  example: 10
+
                 position:
                   type: string
+                  description: Director's role or position in the company
+                  example: CTO
+
                 birthday:
                   type: string
+                  description: Director's date of birth in DD-MM-YYYY format
+                  example: 20-06-1976
+
               required:
-              - first_name
-              - middle_name
-              - last_name
-              - email
-              - phone
-              - phone_iso2
-              - country
-              - state
-              - city
-              - street
-              - postal_code
-              - ownership
-              - position
-              - birthday
-  /customer/director/all/{customer_id}/{director_id}:
-    get:
-      summary: Director
-      tags:
-      - Onboarded Customers - Onboarding
-      security:
-      - bearerAuth: []
-      parameters:
-      - name: customer_id
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: director_id
-        in: path
-        required: true
-        schema:
-          type: string
+                - first_name
+                - middle_name
+                - last_name
+                - email
+                - phone
+                - phone_iso2
+                - country
+                - state
+                - city
+                - street
+                - postal_code
+                - ownership
+                - position
+                - birthday
       responses:
         '200':
-          description: OK
+          description: Director successfully added
+          content:
+            application/json:
+              example:
+                message: "Director Added"
+                status: "success"
+                data:
+                  id: "55196c0f-31c7-4d1f-8b74-25e9fbf6810b"
+                  first_name: "John"
+                  last_name: "Derrick"
+                  email: "Derrick@remote.com"
+                  phone: "+234901234567899"
+                  country: "US"
+                  state: "DE"
+                  city: "City"
+                  street: "Address"
+                  postal_code: "90000"
+                  birthday: "29-06-1999"
+                  ownership: "10"
+                  position: "CTO"
+                  mode: "test"
+        '400':
+          description: Bad Request - Missing required fields or invalid format
+        '401':
+          description: Unauthorized - Invalid API key
+        '422':
+          description: Unprocessable Entity - Validation error
+  /customer/director/all/{customer_id}/{director_id}:
+    get:
+      summary: Get a single director
+      description: >
+        Retrieves the full profile details for a specific director belonging to a specific customer.
+      tags:
+        - Onboarded Customers - Onboarding
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: customer_id
+          in: path
+          required: true
+          description: The unique identifier of the customer.
+          schema:
+            type: string
+        - name: director_id
+          in: path
+          required: true
+          description: The unique identifier of the specific director to retrieve.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK - Successfully retrieved director details.
+          content:
+            application/json:
+              example:
+                message: "Director Found"
+                status: "success"
+                data:
+                  id: "55196c0f-31c7-4d1f-8b74-25e9fbf6810b"
+                  first_name: "John"
+                  last_name: "Derrick"
+                  email: "Derrick@remote.com"
+                  phone: "+234901234567899"
+                  country: "US"
+                  state: "DE"
+                  city: "City"
+                  street: "Address"
+                  postal_code: "90000"
+                  birthday: "29-06-1999"
+                  ownership: "10"
+                  position: "CTO"
+                  mode: "test"
         '400':
           description: Bad Request
         '401':
@@ -185,30 +279,26 @@ paths:
   /customer/director/update/{customer_id}/{director_id}:
     post:
       summary: Update director
+      description: >
+        Updates the existing profile details for a specific director associated with a customer. 
+        Pass your `{api_key}` as a bearer token in the request header to authorize this call.
       tags:
-      - Onboarded Customers - Onboarding
+        - Onboarded Customers - Onboarding
       security:
-      - bearerAuth: []
+        - bearerAuth: [ ]
       parameters:
-      - name: customer_id
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: director_id
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '422':
-          description: Unprocessable Entity
+        - name: customer_id
+          in: path
+          required: true
+          description: The unique identifier of the customer (onboarded entity).
+          schema:
+            type: string
+        - name: director_id
+          in: path
+          required: true
+          description: The unique identifier of the director to be updated.
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -218,47 +308,119 @@ paths:
               properties:
                 first_name:
                   type: string
+                  description: Director's legal first name
+                  example: John
+
                 middle_name:
                   type: string
+                  description: Director's legal middle name
+                  example: Michael
+
                 last_name:
                   type: string
+                  description: Director's legal last name
+                  example: Derrick
+
                 email:
                   type: string
+                  format: email
+                  description: Director's email address
+                  example: derrick@remote.com
+
                 phone:
                   type: string
+                  description: Director's phone number, including country dialing code if applicable
+                  example: +234901234567899
+
                 phone_iso2:
                   type: string
+                  description: ISO 3166-1 alpha-2 country code for the phone number
+                  example: NG
+
                 country:
                   type: string
+                  description: ISO 3166-1 alpha-2 country code of residence
+                  example: US
+
                 state:
                   type: string
+                  description: State, province, or subdivision code/name for the director's address
+                  example: DE
+
                 city:
                   type: string
+                  description: City of residence
+                  example: Wilmington
+
                 street:
                   type: string
+                  description: Street address of the director
+                  example: 24 Maple Avenue
+
                 postal_code:
                   type: string
+                  description: Postal or ZIP code for the address
+                  example: 90000
+
                 ownership:
                   type: integer
+                  description: Percentage of shares owned by the director
+                  example: 10
+
                 position:
                   type: string
+                  description: Director's role or position in the company
+                  example: CTO
+
                 birthday:
                   type: string
+                  description: Director's date of birth in DD-MM-YYYY format
+                  example: 20-06-1976
+
               required:
-              - first_name
-              - middle_name
-              - last_name
-              - email
-              - phone
-              - phone_iso2
-              - country
-              - state
-              - city
-              - street
-              - postal_code
-              - ownership
-              - position
-              - birthday
+                - first_name
+                - middle_name
+                - last_name
+                - email
+                - phone
+                - phone_iso2
+                - country
+                - state
+                - city
+                - street
+                - postal_code
+                - ownership
+                - position
+                - birthday
+      responses:
+        '200':
+          description: Director profile successfully updated
+          content:
+            application/json:
+              example:
+                message: "Director Updated"
+                status: "success"
+                data:
+                  id: "55196c0f-31c7-4d1f-8b74-25e9fbf6810b"
+                  first_name: "John"
+                  last_name: "Derrick"
+                  email: "Derrick@remote.com"
+                  phone: "+234901234567899"
+                  country: "US"
+                  state: "DE"
+                  city: "City"
+                  street: "Address"
+                  postal_code: "90000"
+                  birthday: "29-06-1999"
+                  ownership: "10"
+                  position: "CTO"
+                  mode: "test"
+        '400':
+          description: Bad Request - Missing parameters or invalid JSON structure
+        '401':
+          description: Unauthorized - Bearer token missing or invalid
+        '422':
+          description: Unprocessable Entity - Validation failed for specific fields
   /customer/director/delete/{customer_id}/{director_id}:
     delete:
       summary: Delete director
@@ -269,11 +431,13 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The unique identifier of the customer
         required: true
         schema:
           type: string
       - name: director_id
         in: path
+        description: The unique identifier of the director
         required: true
         schema:
           type: string
@@ -288,20 +452,14 @@ paths:
           description: Unprocessable Entity
   /customer/create:
     post:
-      summary: Create customer - personal
+      summary: Create customer - personal or business
+      description: >
+        Creates a new customer record on the Stratos platform. 
+        Pass your `{api_key}` as a bearer token in the request header to authorize this call.
       tags:
-      - Onboarded Customers - Onboarding
+        - Onboarded Customers - Onboarding
       security:
-      - bearerAuth: []
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '422':
-          description: Unprocessable Entity
+        - bearerAuth: [ ]
       requestBody:
         required: true
         content:
@@ -311,59 +469,80 @@ paths:
               properties:
                 account_type:
                   type: string
-                gender:
-                  type: string
+                  description: "Account type must be personal or business"
+                  enum: [ personal, business ]
+                  example: personal
                 first_name:
                   type: string
+                  description: "First Name of the customer"
+                  example: John
                 middle_name:
                   type: string
+                  description: "Middle Name (Optional)"
+                  example: Dennis
                 last_name:
                   type: string
+                  description: "Last Name of the customer"
+                  example: Joe
                 email:
                   type: string
+                  description: "Valid email address for the customer"
+                  example: johndoe@remote.com
                 phone:
                   type: string
+                  description: "Phone number (include international prefix)"
+                  example: +12025550147
                 phone_iso2:
                   type: string
+                  description: "Two-letter ISO country code for the phone number"
+                  example: US
                 country:
                   type: string
-                state:
+                  description: "Country ISO2 code (e.g., US, NG, GB)"
+                  example: US
+                platform_account_id:
                   type: string
-                city:
-                  type: string
-                street:
-                  type: string
-                postal_code:
-                  type: string
-                birthday:
-                  type: string
-                source_of_fund_id:
-                  type: string
-                ip_address:
-                  type: string
-                id_type:
-                  type: string
-                id_number:
-                  type: string
+                  description: "Your platform account ID. When supplied, customer will be onboarded under you"
+                business_details:
+                  type: object
+                  description: "Required if account_type is 'business'"
+                  properties:
+                    business_name:
+                      type: string
+                      description: "Business Legal Name"
+                      example: John Remote Corporation
+                  required:
+                    - business_name
               required:
-              - account_type
-              - gender
-              - first_name
-              - middle_name
-              - last_name
-              - email
-              - phone
-              - phone_iso2
-              - country
-              - state
-              - city
-              - street
-              - postal_code
-              - birthday
-              - source_of_fund_id
-              - ip_address
-              - id_type
-              - id_number
+                - account_type
+                - first_name
+                - last_name
+                - email
+                - phone
+                - phone_iso2
+                - country
+      responses:
+        '200':
+          description: OK - User successfully onboarded
+          content:
+            application/json:
+              # Example taken directly from your code snippet
+              example:
+                message: "User Onboarded"
+                status: "success"
+                data:
+                  id: "0917324"
+                  mode: "test"
+                  first_name: "Scott"
+                  last_name: "Mccal"
+                  email: "74derrick@remote.com"
+                  kyc_status: "PENDING"
+        '400':
+          description: Bad Request - Validation error
+        '401':
+          description: Unauthorized - Invalid or missing API Key
+        '422':
+          description: Unprocessable Entity - Data validation failed
   /customer/submit_kyc/{customer_id}:
     post:
       summary: Submit KYC
@@ -374,6 +553,7 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The unique customer ID
         required: true
         schema:
           type: string
@@ -396,11 +576,13 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The unique identifier of the customer
         required: true
         schema:
           type: string
       - name: document_type
         in: path
+        description: Must be document or selfie.Eg image/svg+xml,image/jpeg,image/png,image/webp,video/x-msvideo,image/gif,image/x-icon,image/jpeg
         required: true
         schema:
           type: string
@@ -423,6 +605,7 @@ paths:
                 file:
                   type: string
                   format: binary
+                  description: Must be an image of a selfie or a document
   /customer/users:
     get:
       summary: Get all customers
@@ -449,6 +632,7 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The unique identifier of the customer
         required: true
         schema:
           type: string
@@ -471,6 +655,7 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The unique identifier of the customer
         required: true
         schema:
           type: string
@@ -508,56 +693,108 @@ paths:
               properties:
                 gender:
                   type: string
+                  description: Customer's gender
+                  example: "male"
+
                 first_name:
                   type: string
+                  description: Customer's legal first name
+                  example: "John"
+
                 middle_name:
                   type: string
+                  description: Customer's legal middle name
+                  example: "Michael"
+
                 last_name:
                   type: string
+                  description: Customer's legal last name
+                  example: "Doe"
+
                 email:
                   type: string
+                  format: email
+                  description: Customer's email address
+                  example: "john.doe@example.com"
+
                 phone:
                   type: string
+                  description: Customer's phone number in international format, including country code
+                  example: "+12025550147"
+
                 phone_iso2:
                   type: string
+                  description: ISO 3166-1 alpha-2 country code associated with the phone number
+                  example: "US"
+
                 country:
                   type: string
+                  description: ISO 3166-1 alpha-2 country code of the customer's country of residence
+                  example: "US"
+
                 state:
                   type: string
+                  description: State, province, or administrative region of the customer's address
+                  example: "CA"
+
                 city:
                   type: string
+                  description: City of the customer's residential address
+                  example: "Los Angeles"
+
                 street:
                   type: string
+                  description: Street address of the customer, including house number and street name
+                  example: "742 Evergreen Terrace"
+
                 postal_code:
                   type: string
+                  description: Postal or ZIP code of the customer's address
+                  example: "90001"
+
                 birthday:
                   type: string
+                  description: Customer's date of birth in DD-MM-YYYY format
+                  example: "20-06-1976"
+
                 source_of_fund_id:
                   type: string
+                  description: Identifier representing the customer's source of funds
+                  example: "salary"
+
                 ip_address:
                   type: string
+                  description: IP address from which the onboarding or update request originated
+                  example: "102.89.34.12"
+
                 id_type:
                   type: string
+                  description: Type of identification document being provided for the customer
+                  example: "passport"
+
                 id_number:
                   type: string
+                  description: Identification document number corresponding to the selected id_type
+                  example: "XK1234567"
+
               required:
-              - gender
-              - first_name
-              - middle_name
-              - last_name
-              - email
-              - phone
-              - phone_iso2
-              - country
-              - state
-              - city
-              - street
-              - postal_code
-              - birthday
-              - source_of_fund_id
-              - ip_address
-              - id_type
-              - id_number
+                - gender
+                - first_name
+                - middle_name
+                - last_name
+                - email
+                - phone
+                - phone_iso2
+                - country
+                - state
+                - city
+                - street
+                - postal_code
+                - birthday
+                - source_of_fund_id
+                - ip_address
+                - id_type
+                - id_number
   /business_registration_type:
     get:
       summary: Business registration types
@@ -616,6 +853,7 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
@@ -638,6 +876,7 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
@@ -660,6 +899,7 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
@@ -681,6 +921,7 @@ paths:
               properties:
                 currency:
                   type: string
+                  description: The currency must be USD
               required:
               - currency
   /card/cards/{customer_id}/{card_id}:
@@ -693,11 +934,13 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
       - name: card_id
         in: path
+        description: The card ID
         required: true
         schema:
           type: string
@@ -720,6 +963,7 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
@@ -742,11 +986,13 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
       - name: card_id
         in: path
+        description: The ID of the virtual card
         required: true
         schema:
           type: string
@@ -780,11 +1026,13 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
       - name: card_id
         in: path
+        description: The ID of the virtual card
         required: true
         schema:
           type: string
@@ -818,11 +1066,13 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
       - name: card_id
         in: path
+        description: The ID of the virtual card
         required: true
         schema:
           type: string
@@ -856,11 +1106,13 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
       - name: card_id
         in: path
+        description: The ID of the virtual card
         required: true
         schema:
           type: string
@@ -898,6 +1150,7 @@ paths:
               properties:
                 data:
                   type: string
+                  description: Pass in the encoded card details gotten from the call to the Get Single Card endpoint
               required:
               - data
   /customer/cryptowallets/{customer_id}:
@@ -910,6 +1163,7 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
@@ -932,6 +1186,7 @@ paths:
       parameters:
       - name: wallet_id
         in: path
+        description: The unique ID of the wallet this will be associated with
         required: true
         schema:
           type: string
@@ -954,6 +1209,7 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
@@ -990,6 +1246,7 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
@@ -1012,11 +1269,13 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
       - name: virtual_account_id
         in: path
+        description: The virtual account ID
         required: true
         schema:
           type: string
@@ -1039,6 +1298,7 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
@@ -1061,6 +1321,7 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
@@ -1083,11 +1344,13 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
       - name: trx_id
         in: path
+        description: The transaction ID
         required: true
         schema:
           type: string
@@ -1110,11 +1373,13 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
       - name: recipient_id
         in: path
+        description: The ID of the recipient
         required: true
         schema:
           type: string
@@ -1137,11 +1402,13 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
       - name: customer_wallet_id
         in: path
+        description: The customer wallet ID
         required: true
         schema:
           type: string
@@ -1164,11 +1431,13 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
       - name: customer_crypto_wallet_id
         in: path
+        description: The customer crypto wallet ID
         required: true
         schema:
           type: string
@@ -1191,6 +1460,7 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
@@ -1212,42 +1482,61 @@ paths:
               properties:
                 international_remittance_id:
                   type: string
+                  description: ID of Recipient Country, learn more about getting international_remittance_id from /reference/currencies
                 first_name:
                   type: string
+                  description: The recipient's firstname
                 middle_name:
                   type: string
+                  description: The recipient's middlename(optional)
                 last_name:
                   type: string
+                  description: The recipient's lastname
                 email:
                   type: string
+                  description: The recipient's email address
                 phone:
                   type: string
+                  description: The phone number of the recipient
                 phone_iso2:
                   type: string
+                  description: Recipient Phone number iso2
                 delivery_method:
                   type: string
+                  description: Recipient Payout Method, must be between, bank, mobile_money, cash_pickup
                 bank_name:
                   type: string
+                  description: The bank name
                 entity_type:
                   type: string
+                  description: Sender Entity Type, either personal or business, this is required if delivery_method is bank
                 routing_type:
                   type: string
+                  description: Can be ACH_CODE, SWIFT, IFSC, SORT_CODE, BANK_CODE, BRANCH_CODE, BSB_CODE, LOCATION_ID, TRANSIT_NUMBER, This is always validated against recipient country, required if delivery_method is bank. Verify if routing_type is correct via http://stratos.test/user/docs/reference/banks.
                 routing_code:
                   type: string
+                  description: Bank routing code, required if delivery_method is bank. Verify if routing_code is correct via http://stratos.test/user/docs/reference/banks.
                 acct_type_id:
                   type: string
+                  description: Recipient Account Type, required if delivery_method is bank. Learn more about getting acct_type_id from http://stratos.test/user/docs/reference/currencies under international remittance object.
                 acct_no:
                   type: string
+                  description: Recipient Bank Account Number, required if delivery_method is bank.
                 acct_name:
                   type: string
+                  description: Recipient Bank Account Name, required if delivery_method is bank.
                 state:
                   type: string
+                  description: Recipient State iso2
                 city:
                   type: string
+                  description: Recipient city
                 address:
                   type: string
+                  description: Recipient address
                 postal_code:
                   type: string
+                  description: Recipient Postal/Zip Code
               required:
               - international_remittance_id
               - first_name
@@ -1277,11 +1566,13 @@ paths:
       - bearerAuth: []
       parameters:
       - name: customer_id
+        description: The ID or MCP Key of the onboarded customer.
         in: path
         required: true
         schema:
           type: string
       - name: recipient_id
+        description: The ID of the recipient
         in: path
         required: true
         schema:
@@ -1304,6 +1595,7 @@ paths:
       - bearerAuth: []
       parameters:
       - name: customer_id
+        description: The ID or MCP Key of the onboarded customer.
         in: path
         required: true
         schema:
@@ -1326,11 +1618,13 @@ paths:
       - bearerAuth: []
       parameters:
       - name: customer_id
+        description: The ID or MCP Key of the onboarded customer.
         in: path
         required: true
         schema:
           type: string
       - name: recipient_id
+        description: The ID of the recipient
         in: path
         required: true
         schema:
@@ -1353,42 +1647,61 @@ paths:
               properties:
                 international_remittance_id:
                   type: string
+                  description: ID of Recipient Country, learn more about getting international_remittance_id from /reference/currencies
                 first_name:
                   type: string
+                  description: Recipient's firstname
                 middle_name:
                   type: string
+                  description: Recipient's middlename
                 last_name:
                   type: string
+                  description: Recipient's lastname
                 email:
                   type: string
+                  description: Recipient's email address
                 phone:
                   type: string
+                  description: Recipient's phone number
                 phone_iso2:
                   type: string
+                  description: Recipient's phone number iso2
                 delivery_method:
                   type: string
+                  description: Recipient Payout Method, must be between, bank, mobile_money, cash_pickup
                 bank_name:
                   type: string
+                  description: The bank name
                 entity_type:
                   type: string
+                  description: Sender Entity Type, either personal or business, this is required if delivery_method is bank
                 routing_type:
                   type: string
+                  description: Can be ACH_CODE, SWIFT, IFSC, SORT_CODE, BANK_CODE, BRANCH_CODE, BSB_CODE, LOCATION_ID, TRANSIT_NUMBER, This is always validated against recipient country, required if delivery_method is bank. Verify if routing_type is correct via http://stratos.test/user/docs/reference/banks.
                 routing_code:
                   type: string
+                  description: Bank routing code, required if delivery_method is bank. Verify if routing_code is correct via http://stratos.test/user/docs/reference/banks.
                 acct_type_id:
                   type: string
+                  description: Recipient Account Type, required if delivery_method is bank. Learn more about getting acct_type_id from http://stratos.test/user/docs/reference/currencies under international remittance object.
                 acct_no:
                   type: string
+                  description: Recipient Bank Account Number, required if delivery_method is bank.
                 acct_name:
                   type: string
+                  description: Recipient Bank Account Name, required if delivery_method is bank.
                 state:
                   type: string
+                  description: Recipient State iso2
                 city:
                   type: string
+                  description: Recipient city
                 address:
                   type: string
+                  description: Recipient address
                 postal_code:
                   type: string
+                  description: Recipient Postal/Zip Code
               required:
               - international_remittance_id
               - first_name
@@ -1418,11 +1731,13 @@ paths:
       - bearerAuth: []
       parameters:
       - name: customer_id
+        description: The ID or MCP Key of the onboarded customer.
         in: path
         required: true
         schema:
           type: string
       - name: recipient_id
+        description: The ID of the recipient
         in: path
         required: true
         schema:
@@ -1445,6 +1760,7 @@ paths:
       - bearerAuth: []
       parameters:
       - name: customer_id
+        description: The ID or MCP Key of the onboarded customer.
         in: path
         required: true
         schema:
@@ -1467,6 +1783,7 @@ paths:
       - bearerAuth: []
       parameters:
       - name: customer_id
+        description: The ID or MCP Key of the onboarded customer.
         in: path
         required: true
         schema:
@@ -1490,6 +1807,7 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
@@ -1512,6 +1830,7 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
@@ -1534,6 +1853,7 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
@@ -1556,6 +1876,7 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
@@ -1598,6 +1919,7 @@ paths:
       parameters:
       - name: customer_id
         in: path
+        description: The ID or MCP Key of the onboarded customer.
         required: true
         schema:
           type: string
@@ -1619,14 +1941,19 @@ paths:
               properties:
                 transfer_purpose_id:
                   type: string
+                  description: Purpose of sending money to recipient
                 external_id:
                   type: string
+                  description: Your platform transaction ID
                 recipient_id:
                   type: string
+                  description: Recipient ID, recipient or payee information
                 delivery_window_id:
                   type: string
+                  description: This determines how fast recipient receives payout, not required if there are no options available under delivery_windows object. Learn more http://stratos.test/user/docs/reference/currencies
                 amount:
                   type: integer
+                  description: Amount is lowest currency denomination, the is the amount of money you are sending to recipient, ensure its the recipient currency the recipient expects
               required:
               - transfer_purpose_id
               - external_id
@@ -1674,6 +2001,7 @@ paths:
       - bearerAuth: []
       parameters:
       - name: payment_external_reference
+        description: Transaction reference used for creating checkout url
         in: path
         required: true
         schema:
@@ -1687,13 +2015,20 @@ paths:
           description: Unauthorized
         '422':
           description: Unprocessable Entity
-  /barcode/87864098-47a6-4dfc-81f0-af8028999d5b:
+  /barcode/{session_id}:
     post:
       summary: Cash Payment
       tags:
       - Merchant (Main Account) - Payment Collection
       security:
       - bearerAuth: []
+      parameters:
+      - name: session_id
+        description: The payment session ID
+        in: path
+        required: true
+        schema: 
+          type: string
       responses:
         '200':
           description: OK
@@ -1742,6 +2077,7 @@ paths:
       - bearerAuth: []
       parameters:
       - name: trx_id
+        description: ID or transaction reference
         in: path
         required: true
         schema:
@@ -1765,6 +2101,7 @@ paths:
       parameters:
       - name: recipient_id
         in: path
+        description: ID of remittance recipient
         required: true
         schema:
           type: string
@@ -1787,6 +2124,7 @@ paths:
       parameters:
       - name: wallet_id
         in: path
+        description: ID of fiat wallet
         required: true
         schema:
           type: string
@@ -1809,6 +2147,7 @@ paths:
       parameters:
       - name: crypto_wallet_id
         in: path
+        description: ID of crypto wallet
         required: true
         schema:
           type: string
@@ -1846,42 +2185,61 @@ paths:
               properties:
                 international_remittance_id:
                   type: string
+                  description: ID of Recipient Country, learn more about getting international_remittance_id from /reference/currencies
                 first_name:
                   type: string
+                  description: The recipient's firstname
                 middle_name:
                   type: string
+                  description: The recipient's middlename(optional)
                 last_name:
                   type: string
+                  description: The recipient's lastname
                 email:
                   type: string
+                  description: The recipient's email address
                 phone:
                   type: string
+                  description: The phone number of the recipient
                 phone_iso2:
                   type: string
+                  description: Recipient Phone number iso2
                 delivery_method:
                   type: string
+                  description: Recipient Payout Method, must be between, bank, mobile_money, cash_pickup
                 bank_name:
                   type: string
+                  description: The bank name
                 entity_type:
                   type: string
+                  description: Sender Entity Type, either personal or business, this is required if delivery_method is bank
                 routing_type:
                   type: string
+                  description: Can be ACH_CODE, SWIFT, IFSC, SORT_CODE, BANK_CODE, BRANCH_CODE, BSB_CODE, LOCATION_ID, TRANSIT_NUMBER, This is always validated against recipient country, required if delivery_method is bank. Verify if routing_type is correct via http://stratos.test/user/docs/reference/banks.
                 routing_code:
                   type: string
+                  description: Bank routing code, required if delivery_method is bank. Verify if routing_code is correct via http://stratos.test/user/docs/reference/banks.
                 acct_type_id:
                   type: string
+                  description: Recipient Account Type, required if delivery_method is bank. Learn more about getting acct_type_id from http://stratos.test/user/docs/reference/currencies under international remittance object.
                 acct_no:
                   type: string
+                  description: Recipient Bank Account Number, required if delivery_method is bank.
                 acct_name:
                   type: string
+                  description: Recipient Bank Account Name, required if delivery_method is bank.
                 state:
                   type: string
+                  description: Recipient State iso2
                 city:
                   type: string
+                  description: Recipient city
                 address:
                   type: string
+                  description: Recipient address
                 postal_code:
                   type: string
+                  description: Recipient Postal/Zip Code
               required:
               - international_remittance_id
               - first_name
@@ -1912,6 +2270,7 @@ paths:
       parameters:
       - name: recipient_id
         in: path
+        description: ID of remittance recipient
         required: true
         schema:
           type: string
@@ -1949,6 +2308,7 @@ paths:
       - bearerAuth: []
       parameters:
       - name: recipient_id
+        description: ID of remittance recipient
         in: path
         required: true
         schema:
@@ -1971,42 +2331,61 @@ paths:
               properties:
                 international_remittance_id:
                   type: string
+                  description: ID of Recipient Country, learn more about getting international_remittance_id from /reference/currencies
                 first_name:
                   type: string
+                  description: Recipient's firstname
                 middle_name:
                   type: string
+                  description: Recipient's middlename
                 last_name:
                   type: string
+                  description: Recipient's lastname
                 email:
                   type: string
+                  description: Recipient's email address
                 phone:
                   type: string
+                  description: Recipient's phone number
                 phone_iso2:
                   type: string
+                  description: Recipient's phone number iso2
                 delivery_method:
                   type: string
+                  description: Recipient Payout Method, must be between, bank, mobile_money, cash_pickup
                 bank_name:
                   type: string
+                  description: The bank name
                 entity_type:
                   type: string
+                  description: Sender Entity Type, either personal or business, this is required if delivery_method is bank
                 routing_type:
                   type: string
+                  description: Can be ACH_CODE, SWIFT, IFSC, SORT_CODE, BANK_CODE, BRANCH_CODE, BSB_CODE, LOCATION_ID, TRANSIT_NUMBER, This is always validated against recipient country, required if delivery_method is bank. Verify if routing_type is correct via http://stratos.test/user/docs/reference/banks.
                 routing_code:
                   type: string
+                  description: Bank routing code, required if delivery_method is bank. Verify if routing_code is correct via http://stratos.test/user/docs/reference/banks.
                 acct_type_id:
                   type: string
+                  description: Recipient Account Type, required if delivery_method is bank. Learn more about getting acct_type_id from http://stratos.test/user/docs/reference/currencies under international remittance object.
                 acct_no:
                   type: string
+                  description: Recipient Bank Account Number, required if delivery_method is bank.
                 acct_name:
                   type: string
+                  description: Recipient Bank Account Name, required if delivery_method is bank.
                 state:
                   type: string
+                  description: Recipient State iso2
                 city:
                   type: string
+                  description: Recipient city
                 address:
                   type: string
+                  description: Recipient address
                 postal_code:
                   type: string
+                  description: Recipient Postal/Zip Code
               required:
               - international_remittance_id
               - first_name
@@ -2037,6 +2416,7 @@ paths:
       parameters:
       - name: recipient_id
         in: path
+        description: The ID of the remittance recipient
         required: true
         schema:
           type: string
@@ -2059,6 +2439,7 @@ paths:
       parameters:
       - name: trx_id
         in: path
+        description: The transaction ID
         required: true
         schema:
           type: string
@@ -2081,6 +2462,7 @@ paths:
       parameters:
       - name: trx_id
         in: path
+        description: The transaction ID
         required: true
         schema:
           type: string
@@ -2118,10 +2500,13 @@ paths:
               properties:
                 routing_type:
                   type: string
+                  description: Can be ACH_CODE or SWIFT.
                 routing_code:
                   type: string
+                  description: Bank routing code
                 iso2:
                   type: string
+                  description: Country Iso2 of recipient country
               required:
               - routing_type
               - routing_code
@@ -2168,6 +2553,7 @@ paths:
       parameters:
       - name: currency_id
         in: path
+        description: Id of fiat currency
         required: true
         schema:
           type: string
@@ -2190,6 +2576,7 @@ paths:
       parameters:
       - name: currency_id
         in: path
+        description: Id of fiat currency
         required: true
         schema:
           type: string
@@ -2227,8 +2614,10 @@ paths:
               properties:
                 entity_name:
                   type: string
+                  description: Customer/Agent/Account/Merchant Name
                 external_reference:
                   type: string
+                  description: Your platform external reference
               required:
               - entity_name
               - external_reference
@@ -2242,6 +2631,7 @@ paths:
       parameters:
       - name: entity_id
         in: path
+        description: The entity ID
         required: true
         schema:
           type: string
@@ -2295,12 +2685,16 @@ paths:
               properties:
                 entity_id:
                   type: string
+                  description: ID of the entity to credit. This can be a user, merchant, agent or account.
                 currency:
                   type: string
+                  description: Currency. Must be one of the supported currencies in ISO3 e.g USD.
                 amount:
                   type: string
+                  description: Credit Amount. This should be in the currency's lowest denomination
                 external_reference:
                   type: string
+                  description: Your transaction reference. This MUST be unique for every transaction
               required:
               - entity_id
               - currency
@@ -2331,12 +2725,16 @@ paths:
               properties:
                 entity_id:
                   type: string
+                  description: ID of the entity to debit. This can be a user, merchant, agent or account.
                 currency:
                   type: string
+                  description: Currency. Must be one of the supported currencies in ISO3 e.g USD.
                 amount:
                   type: string
+                  description: Debit Amount. This should be in the currency's lowest denomination
                 external_reference:
                   type: string
+                  description: The external reference
               required:
               - entity_id
               - currency
@@ -2367,14 +2765,19 @@ paths:
               properties:
                 entity_id:
                   type: string
+                  description: ID of the entity to debit. This can be a user, merchant, agent or account.
                 recipient_entity_id:
                   type: string
+                  description: ID of the entity to credit. This can be a user, merchant, agent or account.
                 amount:
                   type: string
+                  description: Debit Amount. This should be in the currency's lowest denomination
                 currency:
                   type: string
+                  description: Currency. Must be one of the supported currencies in ISO3 e.g USD.
                 external_reference:
                   type: string
+                  description: The external reference
               required:
               - entity_id
               - recipient_entity_id
@@ -2390,12 +2793,14 @@ paths:
       - bearerAuth: []
       parameters:
       - name: entity_id
+        description: The entity ID
         in: path
         required: true
         schema:
           type: string
       - name: ledger_transaction_id
         in: path
+        description: The ledger transaction id
         required: true
         schema:
           type: string
@@ -2417,6 +2822,7 @@ paths:
       - bearerAuth: []
       parameters:
       - name: entity_id
+        description: The entity ID
         in: path
         required: true
         schema:
@@ -2460,8 +2866,10 @@ paths:
                     properties:
                       entity_id:
                         type: string
+                        description: The entity ID
                       currency:
                         type: string
+                        description: The currency ID
                     required:
                     - entity_id
                     - currency
@@ -2497,18 +2905,23 @@ paths:
                     properties:
                       entity_id:
                         type: string
+                        description: The ID of the entity
                       external_reference:
                         type: string
+                        description: The external reference
                       currency:
                         type: string
+                        description: The currency ID
                       amount:
                         type: integer
                       type:
                         type: string
                       allowNegativeBalance:
                         type: boolean
+                        description: allowNegativeBalance only works for transfer end debit transactions
                       allowPositiveBalance:
                         type: boolean
+                        description: allowPositiveBalance only works for credit & transfer(recipient) transaction
                     required:
                     - entity_id
                     - external_reference
@@ -2549,16 +2962,23 @@ paths:
                     properties:
                       entity_id:
                         type: string
+                        description: The ID of the entity
                       external_reference:
                         type: string
+                        description: The external reference
                       currency:
                         type: string
+                        description: The currency ID
                       amount:
                         type: integer
                       type:
                         type: string
+                      allowNegativeBalance:
+                        type: boolean
+                        description: allowNegativeBalance only works for transfer end debit transactions
                       allowPositiveBalance:
                         type: boolean
+                        description: allowPositiveBalance only works for credit & transfer(recipient) transaction
                     required:
                     - entity_id
                     - external_reference
@@ -2593,24 +3013,35 @@ paths:
               properties:
                 from_wallet:
                   type: string
+                  description: Debit Fiat Wallet ID/Crypto Wallet ID
                 amount:
                   type: string
+                  description: Amount is lowest currency denomination
                 account_id:
                   type: string
+                  description: Onboarded Customer ID, customer wallet will be credited
                 external_id:
                   type: string
+                  description: Your platform transaction ID
               required:
               - from_wallet
               - amount
               - account_id
               - external_id
-  /transfer_from_customer/0031461:
+  /transfer_from_customer/{customer_id}:
     post:
       summary: Transfer from customer
       tags:
       - Merchant (Main Account) - Local Transfer
       security:
       - bearerAuth: []
+      parameters:
+        - name: customer_id
+          description: Customer ID. The ID of the onboarded customer.
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: OK
@@ -2629,10 +3060,13 @@ paths:
               properties:
                 from_wallet:
                   type: string
+                  description: Debit Fiat Wallet ID/Crypto Wallet ID
                 amount:
                   type: string
+                  description: Amount is lowest currency denomination
                 external_id:
                   type: string
+                  description: Your platform transaction ID
               required:
               - from_wallet
               - amount
@@ -2663,6 +3097,7 @@ paths:
       parameters:
       - name: iso2
         in: path
+        description: Country iso2
         required: true
         schema:
           type: string
@@ -2685,6 +3120,7 @@ paths:
       parameters:
       - name: iso2
         in: path
+        description: Country iso2
         required: true
         schema:
           type: string
@@ -2786,12 +3222,16 @@ paths:
               properties:
                 from_wallet:
                   type: string
+                  description: Debit Fiat Wallet ID/Crypto Wallet ID
                 to_wallet:
                   type: string
+                  description: Credit Fiat Wallet ID/Crypto Wallet ID
                 amount:
                   type: integer
+                  description: Amount is lowest currency denomination
                 external_id:
                   type: string
+                  description: Your platform transaction ID
               required:
               - from_wallet
               - to_wallet
@@ -2822,16 +3262,21 @@ paths:
               properties:
                 transfer_purpose_id:
                   type: string
+                  description: Purpose of sending money to recipient
                 external_id:
                   type: string
+                  description: Your platform transaction ID
                 account_id:
                   type: string
                 recipient_id:
                   type: string
+                  description: Recipient ID, recipient or payee information
                 delivery_window_id:
                   type: string
+                  description: This determines how fast recipient receives payout, not required if there are no options available under delivery_windows object. Learn more http://stratos.test/user/docs/reference/currencies
                 amount:
                   type: integer
+                  description: Amount in lowest currency denomination, this is the amount of money you are sending to recipient, ensure its the recipient currency the recipient expects
               required:
               - transfer_purpose_id
               - external_id
