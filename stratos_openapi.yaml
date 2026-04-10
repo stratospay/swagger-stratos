@@ -60,6 +60,7 @@ tags:
 - name: Merchant (Main Account) - Blockchain Ledger
 - name: Merchant (Main Account) - Local Transfer
 - name: Merchant (Main Account) - General
+- name: Merchant (Main Account) - Invoice
 paths:
   /customer/director/all/{customer_id}:
     get:
@@ -3284,6 +3285,860 @@ paths:
               - recipient_id
               - delivery_window_id
               - amount
+  /invoice/headers:
+    get:
+      summary: Get all invoice headers
+      tags:
+        - Merchant (Main Account) - Invoice
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /invoice/headers/create:
+    post:
+      summary: Create Invoice header (On Main Account)
+      tags:
+        - Merchant (Main Account) - Invoice
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email address to appear on the invoice header
+                phone:
+                  type: string
+                  description: Phone number
+                address:
+                  type: string
+                  description: Invoice header address
+                postal_code:
+                  type: string
+                  description: Postal/Zip Code
+                website:
+                  type: string
+                  description: The entity's website
+                image_url:
+                  type: string
+                  description: URL of the logo to display on the invoice header.
+                image_size:
+                  type: integer
+                  description: Size of the image as a percentage of its original dimensions. Accepted values are 10, 20, 30, 40, 50, 60, 70, 80, 90, or 100.
+                country:
+                  type: string
+                company_name:
+                  type: string
+                  description: The company name to appear on the invoice header. An invoice header is always tied to a company. You can only generate one invoice header per company.
+                city:
+                  type: string
+                  description: City
+                state:
+                  type: string
+                  description: State iso2
+              required:
+                - country
+                - email
+                - phone
+                - company_name
+                - state
+                - city
+                - address
+                - postal_code
+                - image_url
+                - image_size
+  /invoice/headers/update/{header_id}:
+    put:
+      summary: Update Invoice header (On Main Account)
+      tags:
+        - Merchant (Main Account) - Invoice
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: header_id
+          in: path
+          description: The invoice header ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email address to appear on the invoice header
+                phone:
+                  type: string
+                  description: Phone number
+                address:
+                  type: string
+                  description: Invoice header address
+                postal_code:
+                  type: string
+                  description: Postal/Zip Code
+                website:
+                  type: string
+                  description: The entity's website
+                image_url:
+                  type: string
+                  description: URL of the logo to display on the invoice header.
+                image_size:
+                  type: integer
+                  description: Size of the image as a percentage of its original dimensions. Accepted values are 10, 20, 30, 40, 50, 60, 70, 80, 90, or 100.
+                country:
+                  type: string
+                company_name:
+                  type: string
+                  description: The company name to appear on the invoice header. An invoice header is always tied to a company. You can only generate one invoice header per company.
+                city:
+                  type: string
+                  description: City
+                state:
+                  type: string
+                  description: State iso2
+              required:
+                - country
+                - email
+                - phone
+                - company_name
+                - state
+                - city
+                - address
+                - postal_code
+                - image_url
+                - image_size
+  /invoice/headers/{header_id}:
+    get:
+      summary: Fetch an invoice header by its ID
+      tags:
+        - Merchant (Main Account) - Invoice
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: header_id
+          description: The ID of the invoice header to retrieve.
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /invoice/headers/delete/{header_id}:
+    delete:
+      summary: Delete an invoice header by its ID
+      tags:
+        - Merchant (Main Account) - Invoice
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: header_id
+          description: The ID of the invoice header to delete.
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /invoice/signature:
+    get:
+      summary: Get all invoice signatures
+      tags:
+        - Merchant (Main Account) - Invoice
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /invoice/signature/create:
+    post:
+      summary: Create Invoice signature (On Main Account)
+      tags:
+        - Merchant (Main Account) - Invoice
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: The title of the signature. This is used to identify the signature
+                image_size:
+                  type: integer
+                  description: Size of the image as a percentage of its original dimensions. Accepted values are 10, 20, 30, 40, 50, 60, 70, 80, 90, or 100.
+                image_url:
+                  type: string
+                  description: URL of the signature image.
+              required:
+                - title
+                - image_url
+                - image_size
+  /invoice/signature/update/{signature_id}:
+    put:
+      summary: Update Invoice signature (On Main Account)
+      tags:
+        - Merchant (Main Account) - Invoice
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: signature_id
+          in: path
+          description: The invoice signature ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: The title of the signature. This is used to identify the signature
+                image_size:
+                  type: integer
+                  description: Size of the image as a percentage of its original dimensions. Accepted values are 10, 20, 30, 40, 50, 60, 70, 80, 90, or 100.
+                image_url:
+                  type: string
+                  description: URL of the signature image.
+              required:
+                - title
+                - image_url
+                - image_size
+  /invoice/signature/{signature_id}:
+    get:
+      summary: Fetch an invoice signature by its ID
+      tags:
+        - Merchant (Main Account) - Invoice
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: header_id
+          description: The ID of the invoice signature to retrieve.
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /invoice/signature/delete/{signature_id}:
+    delete:
+      summary: Delete an invoice signature by its ID
+      tags:
+        - Merchant (Main Account) - Invoice
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: signature_id
+          description: The ID of the invoice signature to delete.
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+          
+  /invoice/recipient:
+    get:
+      summary: Get all invoice recipients/entities
+      tags:
+        - Merchant (Main Account) - Invoice
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /invoice/recipient/create:
+    post:
+      summary: Create Invoice recipient/entity (On Main Account)
+      tags:
+        - Merchant (Main Account) - Invoice
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                entity_type:
+                  type: string
+                  description: The entity's type. Must be one of individual or company.
+                country:
+                  type: string
+                  description: Country must be in ISO2 format e.g US, NG
+                first_name:
+                  type: string
+                  description: The entity's first name.
+                last_name:
+                  type: string
+                  description: The entity's last name.
+                email:
+                  type: string
+                  description: The entity's email address.
+                phone:
+                  type: string
+                  description: Phone number of the entity
+                state:
+                  type: string
+                  description: State iso2
+                city:
+                  type: string
+                  description: City
+                address:
+                  type: string
+                  description: The entity's address
+                postal_code:
+                  type: string
+                  description: The entity's Postal/Zip Code
+                company_name:
+                  type: string
+                  description: The invoice recipient's company name. This is required if entity type is company
+              required:
+                - entity_type
+                - country
+                - first_name
+                - last_name
+                - email
+                - phone
+                - state
+                - city
+                - address
+                - postal_code
+  /invoice/recipient/update/{recipient_id}:
+    put:
+      summary: Update Invoice signature (On Main Account)
+      tags:
+        - Merchant (Main Account) - Invoice
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: recipient_id
+          in: path
+          description: The ID of the entity/recipient to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                entity_type:
+                  type: string
+                  description: The entity's type. Must be one of individual or company.
+                country:
+                  type: string
+                  description: Country must be in ISO2 format e.g US, NG
+                first_name:
+                  type: string
+                  description: The entity's first name.
+                last_name:
+                  type: string
+                  description: The entity's last name.
+                email:
+                  type: string
+                  description: The entity's email address.
+                phone:
+                  type: string
+                  description: Phone number of the entity
+                state:
+                  type: string
+                  description: State iso2
+                city:
+                  type: string
+                  description: City
+                address:
+                  type: string
+                  description: The entity's address
+                postal_code:
+                  type: string
+                  description: The entity's Postal/Zip Code
+                company_name:
+                  type: string
+                  description: The invoice recipient's company name. This is required if entity type is company
+              required:
+  /invoice/recipient/{recipient_id}:
+    get:
+      summary: Fetch an invoice recipient by its ID
+      tags:
+        - Merchant (Main Account) - Invoice
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: recipient_id
+          description: ID of entity/recipient to retrieve.
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /invoice/recipient/delete/{recipient_id}:
+    delete:
+      summary: Delete an invoice recipient/entity by its ID
+      tags:
+        - Merchant (Main Account) - Invoice
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: recipient_id
+          description: ID of entity/recipient to delete.
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+          
+  /invoice/invoice:
+    get:
+      summary: Get all invoices created
+      tags:
+        - Merchant (Main Account) - Invoice
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /invoice/invoice/create:
+    post:
+      summary: Create Invoice for a recipient/entity (On Main Account)
+      tags:
+        - Merchant (Main Account) - Invoice
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - currency
+                - discount_type
+                - discount_value
+                - tax_type
+                - tax_value
+                - items
+                - title
+                - customer
+                - due_date
+                - emails
+              properties:
+                currency:
+                  type: string
+                  pattern: '^[A-Z,a-z]{3}$'
+                  description: Currency code in ISO 4217 format (3 characters). Example  usd, eur, gbp.
+                  example: usd
+                discount_type:
+                  type: string
+                  enum: [ fixed, percentage ]
+                  description: Type of discount to apply. Allowed values e.g fixed, percentage.
+                discount_value:
+                  type: number
+                  minimum: 0
+                  description: Discount value. Must be a number greater than or equal to 0.
+                tax_type:
+                  type: string
+                  enum: [ fixed, percentage ]
+                  description: Type of tax to apply. Allowed values e.g fixed, percentage.
+                tax_value:
+                  type: number
+                  minimum: 0
+                  description: Tax value. Must be a number greater than or equal to 0.
+                items:
+                  type: array
+                  minItems: 1
+                  description: Array of invoice items. At least one item is required.
+                  items:
+                    type: object
+                    required: [ description, quantity, amount ]
+                    properties:
+                      description:
+                        type: string
+                        description: Description of the item.
+                      quantity:
+                        type: integer
+                        minimum: 1
+                        description: Quantity of the item. Must be at least 1.
+                      amount:
+                        type: number
+                        minimum: 0.01
+                        description: Price of the item. Must be at least 0.01.
+                title:
+                  type: string
+                  maxLength: 255
+                  description: Invoice number or title. Maximum 255 characters.
+                customer:
+                  type: string
+                  format: uuid
+                  description: ID of the customer. Must be a valid customer UUID.
+                due_date:
+                  type: string
+                  format: date
+                  description: Invoice due date in Y-m-d format. Must be today or a future date.
+                emails:
+                  type: array
+                  description: Array of email objects to receive payment notification. At least one email is required.
+                  minItems: 1
+                  items:
+                    type: object
+                    required: [ email ]
+                    properties:
+                      email:
+                        type: string
+                        format: email
+                        description: Valid email address for sending the notification email.
+                header:
+                  type: string
+                  format: uuid
+                  description: ID of the invoice header (optional).
+                signature:
+                  type: string
+                  format: uuid
+                  description: ID of the signature (optional).
+                invoice_customer_signature:
+                  type: boolean
+                  default: false
+                  description: Whether to require customer signature (optional).
+                memo:
+                  type: string
+                  maxLength: 255
+                  description: Additional notes or memo for the invoice. Maximum 255 characters (optional).
+                invoice_vat_number:
+                  type: string
+                  maxLength: 255
+                  description: VAT number. Maximum 255 characters (optional).
+                invoice_delivery_number:
+                  type: string
+                  maxLength: 255
+                  description: Delivery number. Maximum 255 characters (optional).
+                invoice_order_number:
+                  type: string
+                  maxLength: 255
+                  description: Order number. Maximum 255 characters (optional).
+                image_background:
+                  type: string
+                  description: URL of the background image (optional).
+  /invoice/invoice/update/{invoice_id}:
+    put:
+      summary: Update Invoice (On Main Account)
+      tags:
+        - Merchant (Main Account) - Invoice
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: invoice_id
+          in: path
+          description: The ID of the invoice to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              properties:
+                currency:
+                  type: string
+                  pattern: '^[A-Z,a-z]{3}$'
+                  description: Currency code in ISO 4217 format (3 characters). Example  usd, eur, gbp.
+                  example: usd
+                discount_type:
+                  type: string
+                  enum: [ fixed, percentage ]
+                  description: Type of discount to apply. Allowed values e.g fixed, percentage.
+                discount_value:
+                  type: number
+                  minimum: 0
+                  description: Discount value. Must be a number greater than or equal to 0.
+                tax_type:
+                  type: string
+                  enum: [ fixed, percentage ]
+                  description: Type of tax to apply. Allowed values e.g fixed, percentage.
+                tax_value:
+                  type: number
+                  minimum: 0
+                  description: Tax value. Must be a number greater than or equal to 0.
+                items:
+                  type: array
+                  minItems: 1
+                  description: Array of invoice items. At least one item is required.
+                  items:
+                    type: object
+                    required: [ description, quantity, amount ]
+                    properties:
+                      description:
+                        type: string
+                        description: Description of the item.
+                      quantity:
+                        type: integer
+                        minimum: 1
+                        description: Quantity of the item. Must be at least 1.
+                      amount:
+                        type: number
+                        minimum: 0.01
+                        description: Price of the item. Must be at least 0.01.
+                title:
+                  type: string
+                  maxLength: 255
+                  description: Invoice number or title. Maximum 255 characters.
+                customer:
+                  type: string
+                  format: uuid
+                  description: ID of the customer. Must be a valid customer UUID.
+                due_date:
+                  type: string
+                  format: date
+                  description: Invoice due date in Y-m-d format. Must be today or a future date.
+                emails:
+                  type: array
+                  description: Array of email objects to receive payment notification. At least one email is required.
+                  minItems: 1
+                  items:
+                    type: object
+                    required: [ email ]
+                    properties:
+                      email:
+                        type: string
+                        format: email
+                        description: Valid email address for sending the notification email.
+                header:
+                  type: string
+                  format: uuid
+                  description: ID of the invoice header (optional).
+                signature:
+                  type: string
+                  format: uuid
+                  description: ID of the signature (optional).
+                invoice_customer_signature:
+                  type: boolean
+                  default: false
+                  description: Whether to require customer signature (optional).
+                memo:
+                  type: string
+                  maxLength: 255
+                  description: Additional notes or memo for the invoice. Maximum 255 characters (optional).
+                invoice_vat_number:
+                  type: string
+                  maxLength: 255
+                  description: VAT number. Maximum 255 characters (optional).
+                invoice_delivery_number:
+                  type: string
+                  maxLength: 255
+                  description: Delivery number. Maximum 255 characters (optional).
+                invoice_order_number:
+                  type: string
+                  maxLength: 255
+                  description: Order number. Maximum 255 characters (optional).
+                image_background:
+                  type: string
+                  description: URL of the background image (optional).
+  /invoice/invoice/{invoice_id}:
+    get:
+      summary: Fetch an invoice by its ID
+      tags:
+        - Merchant (Main Account) - Invoice
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: invoice_id
+          description: ID of invoice to retrieve.
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+  /invoice/invoice/delete/{invoice_id}:
+    delete:
+      summary: Delete an invoice by its ID
+      tags:
+        - Merchant (Main Account) - Invoice
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: invoice_id
+          description: ID of invoice to delete.
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
 components:
   securitySchemes:
     bearerAuth:
